@@ -28,7 +28,7 @@ app.post('/header', (req, res) => {
     res.send("username:" + username + " " + "password:" + password)
 })
 
-/*b)Make a file upload API support PNG,JPG file only */
+/* /*b)Make a file upload API support PNG,JPG file only */
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, "./uploads")
@@ -49,7 +49,7 @@ const upload = multer({ storage: storage, limits: { fileSize: 1024 * 1024 * 5 },
 
 app.post('/file', function(req, res) {
     upload(req, res, function(error) {
-        if (errorr) {
+        if (error) {
             res.send('File upload failed');
         } else {
             res.send('File upload succed');
@@ -59,7 +59,7 @@ app.post('/file', function(req, res) {
 
 /* c)Make a file Download API, that can download file from application directory */
 const { downloads } = require("./application/download");
-app.get('/dwld', downloads);
+app.get('/', downloads);
 
 //Port connection
 const port = process.env.PORT || 5000
