@@ -38,6 +38,7 @@ const storage = multer.diskStorage({
     }
 })
 const fileFilter = function(req, file, cb) {
+    console.log(file);
     if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
         cb(null, true);
     } else {
@@ -45,7 +46,7 @@ const fileFilter = function(req, file, cb) {
         return cb(new Error());
     }
 }
-const upload = multer({ storage: storage, limits: { fileSize: 1024 * 1024 * 5 }, fileFilter: fileFilter }).single("myFile");
+const upload = multer({ storage: storage, fileFilter: fileFilter }).single("myFile");
 
 app.post('/file', function(req, res) {
     upload(req, res, function(error) {
@@ -59,7 +60,7 @@ app.post('/file', function(req, res) {
 
 /* c)Make a file Download API, that can download file from application directory */
 const { downloads } = require("./application/download");
-app.get('/', downloads);
+app.get('/downloads', downloads);
 
 //Port connection
 const port = process.env.PORT || 5000
